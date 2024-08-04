@@ -1,17 +1,29 @@
-// var count = 0
+// building a url to qrcode to website application
+import inquirer from 'inquirer';
+// const inquirer = require("inquirer")
 
-// const interval = setInterval(() => {
-//     count += 1;
-//     console.log(count);
-//     if (count === 10) {
-//         console.log("Stop here dude");
-//         clearInterval(interval)
-//     }
+// var qrcode = require('qrcode-terminal');
+import qrcode from "qrcode-terminal"
 
-// }, 2000)
-
-console.log("HAPPY CODING");
-for (var i = 0; i < 10; i++) {
-    console.log(i);
-}
-console.log("eeey");
+inquirer
+    .prompt([
+        /* Pass your questions in here */
+        {
+            message: "Enter your URL please!",
+            name: "URL",
+        }
+    ])
+    .then((answers) => {
+        // Use user feedback for... whatever!!
+        console.log(answers);
+        qrcode.generate(answers.URL, { small: true }, (qrcode) => {
+            console.log(qrcode)
+        });
+    })
+    .catch((error) => {
+        if (error.isTtyError) {
+            // Prompt couldn't be rendered in the current environment
+        } else {
+            // Something else went wrong
+        }
+    });
